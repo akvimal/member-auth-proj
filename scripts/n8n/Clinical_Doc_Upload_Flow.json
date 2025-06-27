@@ -1,0 +1,440 @@
+{
+  "name": "Clinical Doc Upload Flow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "upload-clinical",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -1500,
+        -300
+      ],
+      "id": "f095dded-804e-4724-95ce-24d78f3abdab",
+      "name": "Document Upload",
+      "webhookId": "69e26484-580c-424e-a517-774ea3cd765c"
+    },
+    {
+      "parameters": {
+        "jsCode": "const metadata = JSON.parse($(\"Document Upload\").first().json.body.metadata);\nmetadata['file_name'] =  $('Document Upload').item.binary.file.fileName;\nmetadata['file_extension'] = $('Document Upload').item.binary.file.fileExtension;\nreturn metadata;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -1300,
+        -100
+      ],
+      "id": "e05fb58a-b395-4009-89b1-e66bc335bd75",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "member_docs_metadata",
+          "mode": "list",
+          "cachedResultName": "member_docs_metadata"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "member_id": "={{ $json.member_id }}",
+            "document_title": "={{ $json.title }}",
+            "document_category": "={{ $json.category }}",
+            "document_path": "={{ $json.file_name }}",
+            "document_type": "={{ $json.file_extension }}"
+          },
+          "matchingColumns": [
+            "id"
+          ],
+          "schema": [
+            {
+              "id": "member_id",
+              "displayName": "member_id",
+              "required": true,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "document_path",
+              "displayName": "document_path",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "document_title",
+              "displayName": "document_title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "document_category",
+              "displayName": "document_category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "create_date",
+              "displayName": "create_date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "dateTime",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "document_type",
+              "displayName": "document_type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "id",
+              "displayName": "id",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "channel",
+              "displayName": "channel",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -1040,
+        20
+      ],
+      "id": "c83a24db-5832-4860-aa6a-b437cc309c08",
+      "name": "Postgres",
+      "credentials": {
+        "postgres": {
+          "id": "AMDgTqUJw3MtEYjN",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "pdf",
+        "binaryPropertyName": "file",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        -380,
+        -280
+      ],
+      "id": "7e221a0b-8914-4201-a76f-96483fb57fdb",
+      "name": "Extract PDF Text"
+    },
+    {
+      "parameters": {
+        "mode": "insert",
+        "tableName": "member_docs_vectors",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.vectorStorePGVector",
+      "typeVersion": 1.1,
+      "position": [
+        -180,
+        -280
+      ],
+      "id": "00b00943-e0ce-44ae-8704-70e364a0cee2",
+      "name": "Postgres PGVector Store",
+      "credentials": {
+        "postgres": {
+          "id": "AMDgTqUJw3MtEYjN",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "nomic-embed-text:latest"
+      },
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOllama",
+      "typeVersion": 1,
+      "position": [
+        -260,
+        -60
+      ],
+      "id": "57c15279-1f74-47c0-bd6b-77bd7e315e2a",
+      "name": "Embeddings Ollama",
+      "credentials": {
+        "ollamaApi": {
+          "id": "hTd2d3JYCMOsJjzU",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "member_id",
+                "value": "={{ $('Set Doc Metadata').first().json.member_id }}"
+              },
+              {
+                "name": "document_title",
+                "value": "={{ $('Set Doc Metadata').first().json.document_title }}"
+              }
+            ]
+          }
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1,
+      "position": [
+        -120,
+        -60
+      ],
+      "id": "6e220f62-fd91-4bf0-8177-dd3297f6a191",
+      "name": "Default Data Loader"
+    },
+    {
+      "parameters": {
+        "chunkSize": 400,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        -100,
+        120
+      ],
+      "id": "bc1ceba3-509a-4bc9-8aa4-1a7c1ab7687d",
+      "name": "Recursive Character Text Splitter"
+    },
+    {
+      "parameters": {
+        "mode": "chooseBranch"
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -560,
+        -280
+      ],
+      "id": "33a16685-8d0e-412d-9726-4f50b90e6161",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "67b3c795-6cee-41c8-be31-3071fdf6cabf",
+              "name": "member_id",
+              "value": "={{$(\"Code\").first().json.member_id}}",
+              "type": "string"
+            },
+            {
+              "id": "cb0de734-5176-448b-a2fd-c5b6793b34fc",
+              "name": "document_title",
+              "value": "={{$(\"Code\").first().json.title}}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1040,
+        -200
+      ],
+      "id": "b49d09ce-93f9-4602-bbb1-20d6755affc5",
+      "name": "Set Doc Metadata"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        -800,
+        -80
+      ],
+      "id": "62ad1015-82b6-4326-8172-60f36e230bb0",
+      "name": "Merge1"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Document Upload": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Set Doc Metadata",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Postgres",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Embeddings Ollama": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Default Data Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Recursive Character Text Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Default Data Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract PDF Text": {
+      "main": [
+        [
+          {
+            "node": "Postgres PGVector Store",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Extract PDF Text",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set Doc Metadata": {
+      "main": [
+        [
+          {
+            "node": "Merge1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge1": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "11a07aa6-fd66-450c-9e5a-3d09c95e8251",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ed70c4537c2bcc3d9468681973b0c99048543c3da4c265394aa8922e599f4cd7"
+  },
+  "id": "V19HUK6R4yrvGReJ",
+  "tags": []
+}

@@ -1,0 +1,210 @@
+{
+  "name": "Auth Review AI Flow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1260,
+        -180
+      ],
+      "id": "fadc3246-22bd-45b7-aa6f-8b7bd16b5e2c",
+      "name": "When chat message received",
+      "webhookId": "c910010e-ed0f-458a-9c4f-8233e2eeb6e9"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are helpful assistant, use the database tables provided in tools to answer the questions.\n\nPrompt:\n{{ $('Webhook').first().json.body.chatInput}}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.8,
+      "position": [
+        -640,
+        -380
+      ],
+      "id": "c6c8cffd-17b3-47e1-ba20-8633eda4463a",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "llama3.2:latest",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        -780,
+        -80
+      ],
+      "id": "7d45077c-ec68-4b98-91b3-4c1c55fa7591",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "hTd2d3JYCMOsJjzU",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Webhook').first().json.body.sessionId}}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryPostgresChat",
+      "typeVersion": 1.3,
+      "position": [
+        -520,
+        -100
+      ],
+      "id": "e453f3a9-1a03-4983-972e-f84a524e31c9",
+      "name": "Postgres Chat Memory",
+      "credentials": {
+        "postgres": {
+          "id": "AMDgTqUJw3MtEYjN",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "96a32fd3-078a-4ee8-8194-0e00cb9ed975",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -980,
+        -380
+      ],
+      "id": "010ff0a2-ad62-4280-abcd-c4403df7ce66",
+      "name": "Webhook",
+      "webhookId": "96a32fd3-078a-4ee8-8194-0e00cb9ed975"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        -320
+      ],
+      "id": "49848388-b6d2-4e1f-9167-687200a4936b",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "documents",
+          "mode": "list",
+          "cachedResultName": "documents"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgresTool",
+      "typeVersion": 2.6,
+      "position": [
+        -220,
+        -100
+      ],
+      "id": "5fecec15-a918-4a28-86d4-6c911679dd95",
+      "name": "Documents",
+      "credentials": {
+        "postgres": {
+          "id": "AMDgTqUJw3MtEYjN",
+          "name": "Postgres account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        []
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres Chat Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Documents": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "96fa1300-f5f3-4148-96e5-82884cf85350",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ed70c4537c2bcc3d9468681973b0c99048543c3da4c265394aa8922e599f4cd7"
+  },
+  "id": "wRHLKu1qWZNWiVm2",
+  "tags": []
+}

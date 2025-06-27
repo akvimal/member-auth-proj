@@ -1,0 +1,277 @@
+{
+  "name": "Member Lookup Flow",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "member_authorizations",
+          "mode": "list",
+          "cachedResultName": "member_authorizations"
+        },
+        "returnAll": true,
+        "where": {
+          "values": [
+            {
+              "column": "member_id",
+              "value": "={{ $('Webhook').first().json.body.member_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -200,
+        -20
+      ],
+      "id": "530c9b8b-3409-4c38-9174-ae9ed6f7b500",
+      "name": "Get Member Authorizations",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "AMDgTqUJw3MtEYjN",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "members",
+          "mode": "list",
+          "cachedResultName": "members"
+        },
+        "returnAll": true,
+        "where": {
+          "values": [
+            {
+              "column": "member_id",
+              "value": "={{ $('Webhook').first().json.body.member_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -200,
+        -200
+      ],
+      "id": "4beeaf1d-50b2-4631-a485-9ae7aa205ecc",
+      "name": "Get Member Info",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "AMDgTqUJw3MtEYjN",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "select",
+        "schema": {
+          "__rl": true,
+          "value": "public",
+          "mode": "list",
+          "cachedResultName": "public"
+        },
+        "table": {
+          "__rl": true,
+          "value": "member_docs_metadata",
+          "mode": "list",
+          "cachedResultName": "member_docs_metadata"
+        },
+        "returnAll": true,
+        "where": {
+          "values": [
+            {
+              "column": "member_id",
+              "value": "={{ $('Webhook').first().json.body.member_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -200,
+        200
+      ],
+      "id": "c25abcc0-fd7c-45c5-a02f-e30cc000700f",
+      "name": "Get Member Documents",
+      "alwaysOutputData": true,
+      "credentials": {
+        "postgres": {
+          "id": "AMDgTqUJw3MtEYjN",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "member-lookup",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [
+        -480,
+        -20
+      ],
+      "id": "fe87e870-5b36-49d6-9c15-f329af4e106f",
+      "name": "Webhook",
+      "webhookId": "0d6e2c7e-ff5f-48b4-b47c-d3c4a9977eb3"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [
+        420,
+        -20
+      ],
+      "id": "3a2b8e21-3d0e-447e-a35e-0178acff8438",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "numberInputs": 3
+      },
+      "type": "n8n-nodes-base.merge",
+      "typeVersion": 3.1,
+      "position": [
+        20,
+        -20
+      ],
+      "id": "2187f550-ec57-4899-8e50-c1b7fb6176c6",
+      "name": "Merge"
+    },
+    {
+      "parameters": {
+        "jsCode": "const member = $(\"Get Member Info\").first().json;\nconst authorizations = $(\"Get Member Authorizations\").all().map(item => item.json);\nconst documents = $(\"Get Member Documents\").all().map(item => item.json);\nreturn {member,authorizations,documents};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        220,
+        -20
+      ],
+      "id": "377b2d98-a71b-4817-b4dc-182a763f3b7c",
+      "name": "Map Entities"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Get Member Authorizations": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Get Member Info": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Member Documents": {
+      "main": [
+        [
+          {
+            "node": "Merge",
+            "type": "main",
+            "index": 2
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Get Member Authorizations",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Member Info",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get Member Documents",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge": {
+      "main": [
+        [
+          {
+            "node": "Map Entities",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Map Entities": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "16c588d9-1cbb-4cca-bd25-d8472dbe8772",
+  "meta": {
+    "instanceId": "ed70c4537c2bcc3d9468681973b0c99048543c3da4c265394aa8922e599f4cd7"
+  },
+  "id": "dktWFOJxbM7mc2rC",
+  "tags": []
+}
