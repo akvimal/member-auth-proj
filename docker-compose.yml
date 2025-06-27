@@ -1,9 +1,9 @@
 services:
   n8n:
     image: n8nio/n8n:latest
-    container_name: n8n
+    container_name: auth-n8n
     ports:
-      - "55678:5678"
+      - "5678:5678"
     volumes:
       - n8n_auth_data:/home/node/.n8n
       - D:/shared/rag:/data/shared
@@ -17,9 +17,9 @@ services:
     build:
       context: ./postgres
       dockerfile: postgres.Dockerfile
-    container_name: postgres-vector
+    container_name: auth-pg
     ports:
-      - "55432:5432"
+      - "5432:5432"
     volumes:
       - pg_auth_data:/var/lib/postgresql/data
       - ./postgres/vector_extension.sql:/docker-entrypoint-initdb.d/0-vector_extension.sql
@@ -31,12 +31,12 @@ services:
 
   ollama:
     image: ollama/ollama
-    container_name: ollama
+    container_name: auth-ollama
     runtime: nvidia
     volumes:
       - ollama:/root/.ollama
     ports:
-      - "51434:11434"
+      - "11434:11434"
     deploy:
       resources:
         limits:
