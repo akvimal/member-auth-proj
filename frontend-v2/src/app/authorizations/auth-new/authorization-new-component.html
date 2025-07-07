@@ -1,0 +1,275 @@
+<div class="main-content-container overflow-hidden">
+    <div class="row justify-content-between">
+        <div class="col-lg-6">
+            <div class="page-title">
+                <h1>New Authorization</h1>
+                <p class="text-muted">Create New Authorization for the member</p>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="d-flex justify-content-end page-actions">
+               <a routerLink="/authorizations" class="btn btn-outline-secondary py-1 px-2 px-sm-4 fs-14 fw-medium rounded-3 hover-bg">
+                                    <span class="py-sm-1 d-block">
+                                        <i class="ri-add-line d-none d-sm-inline-block fs-18"></i>
+                                        <span>Back to Authorizations</span>
+                                    </span>
+                                </a>
+            </div>
+        </div>
+       <div class="col-lg-12 mt-4">
+        <form id="medicalAuthForm" [formGroup]="form" (ngSubmit)="onSubmit()">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card bg-white border-0 rounded-3 mb-4">
+                        <div class="card-body p-4">
+                            <h4 class="mb-3">Patient Information</h4>
+                            <div class="row">
+                                <div class="col-lg-3">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Member ID</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control text-dark h-55" formControlName="member_id">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Patient Name</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control text-dark h-55" formControlName="member_name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Date of Birth</label>
+                                        <div class="form-group">
+                                            <div class="form-group position-relative">
+                                                <input type="date" class="form-control h-55 text-dark h-58" formControlName="member_dob">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Insurance Plan</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control text-dark h-55" formControlName="insurance_plan">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <h4 class="mt-4 mb-3">Provider Information</h4>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Provider Name</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control text-dark h-55" formControlName="request_provider_name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Provider NPI</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control text-dark h-55" formControlName="request_provider_npi">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Provider Tax ID</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control text-dark h-55" formControlName="request_provider_tin">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Facility or Practice Name</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control text-dark h-55" formControlName="facility_name">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Contact Number</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control text-dark h-55" formControlName="request_provider_phone">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Fax Number</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control text-dark h-55" formControlName="request_provider_fax">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Address</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control text-dark h-55" formControlName="facility_address">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <h4 class="mt-4 mb-3">Service Information</h4>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Service Type (Check one)</label>
+                                        <div class="d-flex align-items-center mb-4 gap-1">
+                                            @for(item of serviceTypes; track item) {  
+                                            <div class="form-check m-2">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    {{item}}
+                                                </label>
+                                            </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Date of Service (From)</label>
+                                        <div class="form-group">
+                                            <div class="form-group position-relative">
+                                                <input type="date" class="form-control h-55 text-dark h-58" formControlName="service_from_date">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-2">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Date of Service (To)</label>
+                                        <div class="form-group">
+                                            <div class="form-group position-relative">
+                                                <input type="date" class="form-control h-55 text-dark h-58" formControlName="service_to_date">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">ICD-10 Diagnosis Codes</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control text-dark h-55" formControlName="diagnosis_codes">
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-lg-4">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">CPT/HCPCS Codes</label>
+                                        <div class="form-group">
+                                            <input type="text" class="form-control text-dark h-55" formControlName="procedure_codes">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Description of Requested Services</label>
+                                        <div class="form-group">
+                                            <textarea class="form-control text-dark" formControlName="service_description"
+                                            placeholder="Briefly describe what is requested and why it is medically necessary" cols="30" rows="2"></textarea>
+                                            </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                       
+                            <h4 class="mt-4 mb-3">Clinical Information</h4>
+                            <div class="row">
+                                <div class="col-lg-12">
+                                     <div class="form-group mb-2">
+                                        <label class="label text-secondary">Clinical Notes/History</label>
+                                        <div class="form-group">
+                                            <textarea class="form-control text-dark" formControlName="notes"
+                                            placeholder="Brief describe medical history, related diagnoses, previous treatments" cols="30" rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="col-lg-12">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Supporting Documents (attached)</label>
+                                        <div class="d-flex align-items-center mb-4 gap-5">
+                                            @for(item of supportingDocuments; track item) {    
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    {{item}}
+                                                </label>
+                                            </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                 <div class="col-lg-12">
+                                    <div class="form-group mb-2">
+                                        <label class="label text-secondary">Urgency of Request​</label>
+                                        <div class="d-flex align-items-center mb-4 gap-5">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="Routine"
+                                                formControlName="urgency_type"
+                                                id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Routine (Standard processing time, usually 5-7 days)​
+                                                </label>
+                                            </div>
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="Urgent" 
+                                                formControlName="urgency_type" id="flexCheckDefault">
+                                                <label class="form-check-label" for="flexCheckDefault">
+                                                    Urgent (Clinical justification required—typically processed within
+24-48 hours)
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                     <div class="form-group mb-2">
+                                        <label class="label text-secondary">Additional Information/Comments​</label>
+                                        <div class="form-group">
+                                            <textarea class="form-control text-dark" formControlName="additional_comments"
+                                            placeholder="Any additional notes or clarifications" cols="30" rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                     <div class="form-group mb-2">
+                                        <label class="label text-secondary">Contact Information​</label>
+                                        <div class="form-group">
+                                            <textarea class="form-control text-dark" 
+                                            placeholder="Phone / Email" cols="30" rows="2"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <div class="row mt-4">
+                                <div class="col-lg-12">
+                                    <div class="text-end">
+                                        <button type="submit" class="btn btn-primary bg-primary bg-opacity-10 text-primary border-0 fw-semibold py-2 px-4">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>

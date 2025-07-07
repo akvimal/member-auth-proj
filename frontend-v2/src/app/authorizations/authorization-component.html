@@ -1,0 +1,21 @@
+<div class="main-content-container overflow-hidden">
+    <div class="row justify-content-between mb-2">
+        <div class="col-lg-6">
+            <div class="page-title">
+                <h1>Authorizations</h1>
+                <p class="text-muted">All Authorizations</p>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="d-flex justify-content-end page-actions">
+               <a routerLink="/new-auth" class="btn btn-outline-primary py-1 px-2 px-sm-4 fs-14 fw-medium rounded-3 hover-bg">
+                    <span class="py-sm-1 d-block">
+                        <i class="ri-add-line d-none d-sm-inline-block fs-18"></i>
+                        <span>Add New Authorization</span>
+                    </span>
+                </a>
+            </div>
+        </div>
+        <app-authorization-list [data]="authorizationData"></app-authorization-list>
+    </div>
+</div>

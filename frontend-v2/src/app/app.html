@@ -1,0 +1,231 @@
+
+        <!-- Start Preloader Area -->
+        <div class="preloader" id="preloader">
+            <div class="preloader">
+                <div class="waviy position-relative">
+                    <span class="d-inline-block">Loading...</span>
+                    <!-- <span class="d-inline-block">I</span>
+                    <span class="d-inline-block">Z</span>
+                    <span class="d-inline-block">Z</span>
+                    <span class="d-inline-block">E</span>
+                    <span class="d-inline-block">T</span>
+                    <span class="d-inline-block">O</span> -->
+                </div>
+            </div>
+        </div>
+        <!-- End Preloader Area -->
+
+        <!-- Start Sidebar Area -->
+        <div class="sidebar-area" id="sidebar-area">
+            <div class="logo position-relative" style="background-color: #2e86c1;">
+                <a routerLink="home" class="d-block text-decoration-none position-relative">
+                    <img src="assets/images/mizzeto-logo-white.png" alt="logo-icon">
+                    <!-- <span class="logo-text fw-bold text-dark">Mizzeto</span> -->
+                </a>
+                <button class="sidebar-burger-menu bg-transparent p-0 border-0 opacity-0 z-n1 position-absolute top-50 end-0 translate-middle-y" id="sidebar-burger-menu">
+                    <i data-feather="x"></i>
+                </button>
+            </div>
+
+            <aside id="layout-menu" class="layout-menu menu-vertical menu active" data-simplebar>
+                <ul class="menu-inner">
+                    <li class="menu-item">
+                        <a routerLink="home" class="menu-link">
+                            <span class="material-symbols-outlined menu-icon">home</span>
+                            <span class="title">Home</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a routerLink="member" class="menu-link">
+                            <span class="material-symbols-outlined menu-icon">person</span>
+                            <span class="title">Member</span>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a  routerLink="authorizations" class="menu-link">
+                            <span class="material-symbols-outlined menu-icon">problem</span>
+                            <span class="title">Authorizations</span>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+        </div>
+        <!-- End Sidebar Area -->
+
+        <!-- Start Main Content Area -->
+        <div class="container-fluid">
+            <div class="main-content d-flex flex-column">
+                <!-- Start Header Area -->
+                <header class="header-area bg-white mb-4 rounded-bottom-15" id="header-area">
+                    <div class="row align-items-center">
+                        <div class="col-lg-12 col-sm-12">
+                            <div class="right-header-content mt-2 mt-sm-0">
+                                <ul class="d-flex align-items-center justify-content-center justify-content-sm-end ps-0 mb-0 list-unstyled">
+                                   
+                                    <!-- <li class="header-right-item">
+                                        <div class="dropdown notifications noti">
+                                            <button class="btn btn-secondary border-0 p-0 position-relative badge" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                                <span class="material-symbols-outlined">notifications</span>
+                                            </button>
+                                            <div class="dropdown-menu dropdown-lg p-0 border-0 p-0 dropdown-menu-end">
+                                                <div class="d-flex justify-content-between align-items-center title">
+                                                    <span class="fw-semibold fs-15 text-secondary">Notifications <span class="fw-normal text-body fs-14">(03)</span></span>
+                                                    <button class="p-0 m-0 bg-transparent border-0 fs-14 text-primary">Clear All</button>
+                                                </div> 
+
+                                                <div class="max-h-217" data-simplebar>
+                                                    <div class="notification-menu">
+                                                        <a href="notification.html" class="dropdown-item">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="flex-shrink-0">
+                                                                    <i class="material-symbols-outlined text-primary">sms</i>
+                                                                </div>
+                                                                <div class="flex-grow-1 ms-3">
+                                                                    <p>You have requested to <span class="fw-semibold">withdrawal</span></p>
+                                                                    <span class="fs-13">2 hrs ago</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="notification-menu unseen">
+                                                        <a href="notification.html" class="dropdown-item">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="flex-shrink-0">
+                                                                    <i class="material-symbols-outlined text-info">person</i>
+                                                                </div>
+                                                                <div class="flex-grow-1 ms-3">
+                                                                    <p>A new user added in Trezo</p>
+                                                                    <span class="fs-13">3 hrs ago</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="notification-menu">
+                                                        <a href="notification.html" class="dropdown-item">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="flex-shrink-0">
+                                                                    <i class="material-symbols-outlined text-success">mark_email_unread</i>
+                                                                </div>
+                                                                <div class="flex-grow-1 ms-3">
+                                                                    <p>You have requested to <span class="fw-semibold">withdrawal</span></p>
+                                                                    <span class="fs-13">1 day ago</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="notification-menu">
+                                                        <a href="notification.html" class="dropdown-item">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="flex-shrink-0">
+                                                                    <i class="material-symbols-outlined text-primary">sms</i>
+                                                                </div>
+                                                                <div class="flex-grow-1 ms-3">
+                                                                    <p>You have requested to <span class="fw-semibold">withdrawal</span></p>
+                                                                    <span class="fs-13">2 hrs ago</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="notification-menu unseen">
+                                                        <a href="notification.html" class="dropdown-item">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="flex-shrink-0">
+                                                                    <i class="material-symbols-outlined text-info">person</i>
+                                                                </div>
+                                                                <div class="flex-grow-1 ms-3">
+                                                                    <p>A new user added in Trezo</p>
+                                                                    <span class="fs-13">3 hrs ago</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div class="notification-menu">
+                                                        <a href="notification.html" class="dropdown-item">
+                                                            <div class="d-flex align-items-center">
+                                                                <div class="flex-shrink-0">
+                                                                    <i class="material-symbols-outlined text-success">mark_email_unread</i>
+                                                                </div>
+                                                                <div class="flex-grow-1 ms-3">
+                                                                    <p>You have requested to <span class="fw-semibold">withdrawal</span></p>
+                                                                    <span class="fs-13">1 day ago</span>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                </div>
+
+                                                <a href="notification.html" class="dropdown-item text-center text-primary d-block view-all fw-medium rounded-bottom-3">
+                                                    <span>See All Notifications </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </li> -->
+                                    <li class="header-right-item">
+                                        <div class="dropdown admin-profile">
+                                            <div class="d-xxl-flex align-items-center bg-transparent border-0 text-start p-0 cursor dropdown-toggle" data-bs-toggle="dropdown">
+                                                <div class="flex-shrink-0">
+                                                    <img class="rounded-circle wh-40 administrator" src="assets/images/administrator.jpg" alt="admin">
+                                                </div>
+                                                <div class="flex-grow-1 ms-2">
+                                                    <div class="d-flex align-items-center justify-content-between">
+                                                        <div class="d-none d-xxl-block">
+                                                            <div class="d-flex align-content-center">
+                                                                <h3>Olivia</h3>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+    
+                                            <div class="dropdown-menu border-0 bg-white dropdown-menu-end">
+                                                <div class="d-flex align-items-center info">
+                                                    <div class="flex-shrink-0">
+                                                        <img class="rounded-circle wh-30 administrator" src="assets/images/administrator.jpg" alt="admin">
+                                                    </div>
+                                                    <div class="flex-grow-1 ms-2">
+                                                        <h3 class="fw-medium">Olivia John</h3>
+                                                        <span class="fs-12">Marketing Manager</span>
+                                                    </div>
+                                                </div>
+                                                <ul class="admin-link ps-0 mb-0 list-unstyled">
+                                                    <li>
+                                                        <a class="dropdown-item admin-item-link d-flex align-items-center text-body" href="my-profile.html">
+                                                            <i class="material-symbols-outlined">account_circle</i>
+                                                            <span class="ms-2">My Profile</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                                <ul class="admin-link ps-0 mb-0 list-unstyled">
+                                                   
+                                                    <li>
+                                                        <a class="dropdown-item admin-item-link d-flex align-items-center text-body" href="login.html">
+                                                            <i class="material-symbols-outlined">logout</i>
+                                                            <span class="ms-2">Logout</span>
+                                                        </a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+                <!-- End Header Area -->
+
+                  <div class="main-content-container overflow-hidden">
+                    <div class="row justify-content-center">
+                      <router-outlet />
+                    </div>
+
+                    <div class="flex-grow-1"></div>
+
+                      <!-- Start Footer Area -->
+                      <!-- <footer class="footer-area bg-white text-center rounded-top-7">
+                          <p class="fs-14">© <span class="text-primary-div">Trezo</span> is Proudly Owned by <a href="https://envytheme.com/" target="_blank" class="text-decoration-none text-primary">EnvyTheme</a></p>
+                      </footer> -->
+                      <!-- End Footer Area -->
+                    </div>
+                </div>
+        <!-- Start Main Content Area -->

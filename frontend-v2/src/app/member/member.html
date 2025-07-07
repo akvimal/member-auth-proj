@@ -1,0 +1,84 @@
+<div class="main-content-container overflow-hidden">
+    <div class="row justify-content-between">
+        <div class="col-lg-6">
+            <div class="page-title">
+                <h1>Member Authorization</h1>
+                <p class="text-muted">Review Member Authorization</p>
+            </div>
+        </div>
+        <div class="col-lg-6">
+           
+        </div>
+       <div class="card bg-white border-0 rounded-3 mb-4">
+            <div class="card-body p-4">
+            <div class="row justify-content-between">
+                <div class="col-lg-12">
+                    <!-- <form> -->
+                        <div class="d-flex justify-content-start">
+                        <div class="form-group">
+                            <!-- <label class="label text-secondary">First Name</label> -->
+                            <div class="form-group">
+                                <input type="text" [(ngModel)]="memberId" class="form-control text-dark" placeholder="Member ID">
+                            </div>
+                        </div>
+                        <!-- <div class="form-group mb-4">
+                            <div class="form-group">
+                                <input type="email" class="form-control text-dark h-55" placeholder="envytheme@info.com">
+                            </div>
+                        </div> -->
+                        
+                        
+                        <div class="form-group m-2">
+                            <div class="form-group">
+                            <button type="button" [disabled]="memberId == '' ? 'disabled' : ''" (click)="onSubmit()" class="btn btn-primary bg-primary bg-opacity-10 text-primary border-0 fw-semibold py-2 px-4">Search</button>
+                            <!--
+                             <button type="submit" class="btn btn-danger bg-danger bg-opacity-10 text-danger border-0 fw-semibold py-2 px-4">Cancel</button> -->
+                                {{ errorMessage ? errorMessage : '' }}
+                            </div> 
+                    </div>
+                        </div>
+                    <!-- </form> -->
+                </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card bg-white border-0 rounded-3 mb-4">
+            <div class="card-body p-4">
+            @if(memberData) {
+                <h4>{{memberData.full_name}} ({{memberData.member_id}})</h4>
+                
+                <div class="row justify-content-between mt-4">
+                <div class="col-lg-12">
+                <ul class="nav nav-tabs mb-4" id="myTab2" role="tablist">
+                    <li class="nav-item" role="presentation">
+                        <a [routerLink]="['summary', memberId]" class="nav-link active">
+                            <!-- <span class="material-symbols-outlined">person</span> -->
+                            <span class="title p-2">Summary</span>
+                        </a>
+                        <!-- <button class="nav-link active" id="mbr-summary-tab" data-bs-toggle="tab" data-bs-target="#mbr-summary-tab-pane" type="button" role="tab">Summary</button> -->
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <!-- <button class="nav-link" id="mbr-auths-tab" data-bs-toggle="tab" data-bs-target="#mbr-auths-tab-pane" type="button" role="tab">Authorizations</button> -->
+                        <a [routerLink]="['authorizations', memberId]" class="nav-link">
+                            <!-- <span class="material-symbols-outlined">person</span> -->
+                            <span class="title p-2">Authorizations</span>
+                        </a>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <!-- <button class="nav-link" id="mbr-documents-tab" data-bs-toggle="tab" data-bs-target="#mbr-documents-tab-pane" type="button" role="tab">Documents</button> -->
+                        <a [routerLink]="['documents', memberId]" class="nav-link">
+                            <!-- <span class="material-symbols-outlined">person</span> -->
+                            <span class="title p-2">Documents</span>
+                        </a>
+                    </li>
+                </ul>
+                </div>
+                </div>
+                <div>
+                    <router-outlet></router-outlet>
+                </div>
+                } 
+            </div>
+    </div>
+</div>

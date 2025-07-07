@@ -1,0 +1,52 @@
+<div class="form-group position-relative">
+    <textarea class="form-control text-dark" 
+    [(ngModel)]="question"
+    placeholder="Ask Question..." cols="30" rows="2"></textarea>
+    <button (click)="submitQuestion()" class="btn btn-primary btn-sm mt-2">Submit</button>
+    <!-- <div style="float: left;"> -->
+    <img *ngIf="isLoading" src="assets/images/icons8-spinner.gif" alt="Loading" style="width:30px;height:30px;" class="ml-2 mt-2">
+    <!-- </div> -->
+    <!-- <i class="ri-information-line position-absolute top-0 start-0 fs-20 ps-20 pt-2"></i> -->
+</div>
+<div *ngIf="answer !== ''" class="card bg-grey border-0 rounded-3 mt-2">
+    <!--header with avatar, timestamp and question-->
+    <div class="card-body">
+         <h5>{{ask}}</h5>
+         <markdown [data]="answer"></markdown>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <h3>History</h3>
+    </div>
+    <div class="col-12">
+    <!--header with avatar, timestamp and question-->
+    <div class="card bg-grey border-0 rounded-3 mt-2">
+        <div class="card-body">
+            <div *ngFor="let h of history" class="mt-4">
+                <!-- <img src="assets/images/user-1.jpg" class="rounded-circle me-2" alt="User Avatar" width="40"
+                    height="40"> -->
+                <div [ngStyle]="{'background-color': h.origin === 'human' ? '#ddd' : 'transparent'}" class="p-1">
+                    <!-- <h5 class="mb-0">John Doe</h5> -->
+                     {{h.origin}}
+                    <small class="text-muted">{{h.timestamp | date:'shortTime'}}</small>
+                </div>
+                <div class="text-dark">
+                    <markdown [data]="h.content"></markdown>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!--body with response content-->
+    <!-- <div>
+        <div class="card bg-white border-0 rounded-3 mt-2">
+            <div class="card-body">
+                <p class="text-dark">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor
+                    incididunt ut labore et dolore magna aliqua.</p>
+            </div>
+        </div>
+    </div> -->
+
+</div>

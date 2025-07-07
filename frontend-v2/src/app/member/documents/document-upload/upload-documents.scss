@@ -1,0 +1,13 @@
+.upload-section {
+	input[type=file] {
+		display: none;
+    }
+    .file-upload {
+		display: inline-block;
+		cursor: pointer;
+		line-height: 40px;
+		text-align: center;
+		font-size: 16px;
+		width: 100%;
+	}
+}
